@@ -97,6 +97,10 @@ func Users(c *fiber.Ctx) error {
 		}))
 	}
 
-	claims := token.Claims
-	return c.JSON(claims)
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	var user models.User
+
+	database.DB.Where("ID = ?", claims.Issuer).First(&user)
+	return c.JSON(user)
 }
