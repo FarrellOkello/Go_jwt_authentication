@@ -1,0 +1,42 @@
+package main
+
+import (
+	"log"
+
+	"github.com/FarrellOkello/Go_course/FarrellOkello/Go_course/database"
+	"github.com/FarrellOkello/Go_course/FarrellOkello/Go_course/routes"
+	"github.com/gofiber/fiber/v2"
+	// "github.com/gofiber/fiber/v2/middleware/cors"
+)
+
+func main() {
+	database.Connect()
+
+	app := fiber.New()
+
+	// app.Use(cors.New(cors.Config{
+	// 	AllowCredentials: true,
+	// }))
+
+	routes.Setup(app)
+	log.Fatal(app.Listen(":4000"))
+}
+
+// Go without fibre
+// package main
+// import (
+// 	"fmt"
+// 	"net/http"
+// )
+// func index(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintf(w, "<h1>Welcome to go on the web</h1>")
+// }
+// func about(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintf(w, "About")
+// }
+// func main() {
+// 	http.HandleFunc("/", index)
+// 	http.HandleFunc("/about", about)
+// 	fmt.Println("Server is serving ")
+// 	http.ListenAndServe(":4000", nil)
+// }
